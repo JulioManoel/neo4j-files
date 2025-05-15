@@ -1,0 +1,20 @@
+{
+  "name": "neo4j-files-back",
+  "version": "1.0.0",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "serve": "nodemon app.js",
+    "setup": "node scripts/setup.js"
+  },
+  "author": "Julio Cesar Bonow Manoel",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "neo4j-driver": "^5.28.1",
+    "nodemon": "^3.1.10",
+    "uuid": "^11.1.0"
+  }
+}
