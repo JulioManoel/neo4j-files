@@ -11,4 +11,9 @@ export default [
     to: { name: 'users' },
     icon: { icon: 'tabler-users' },
   },
+  {
+    title: getI18n().global.t('menu.devices'),
+    to: { name: 'devices' },
+    icon: { icon: 'tabler-device-laptop' },
+  }
 ]

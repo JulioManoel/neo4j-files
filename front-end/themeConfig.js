@@ -4,13 +4,13 @@ import { defineThemeConfig } from '@core'
 import { Skins } from '@core/enums'
 
 // ❗ Logo SVG must be imported with ?raw suffix
-import logo from '@images/logo.svg?raw'
+import logo from '/images/neo4j.png'
 import { AppContentLayoutNav, ContentWidth, FooterType, NavbarType } from '@layouts/enums'
 
 export const { themeConfig, layoutConfig } = defineThemeConfig({
   app: {
-    title: 'vuexy',
-    logo: h('div', { innerHTML: logo, style: 'line-height:0; color: rgb(var(--v-global-theme-primary))' }),
+    title: 'Neo4j',
+    logo: h('img', { src: logo, alt: 'Cartalia', style: 'height: 50px' }),
     contentWidth: ContentWidth.Boxed,
     contentLayoutNav: AppContentLayoutNav.Vertical,
     overlayNavFromBreakpoint: breakpointsVuetifyV3.lg - 1, // 1 for matching with vuetify breakpoint. Docs: https://next.vuetifyjs.com/en/features/display-and-platform/
@@ -24,14 +24,9 @@ export const { themeConfig, layoutConfig } = defineThemeConfig({
           isRTL: false,
         },
         {
-          label: 'French',
-          i18nLang: 'fr',
+          label: 'Portuguese (BR)',
+          i18nLang: 'pt-BR',
           isRTL: false,
-        },
-        {
-          label: 'Arabic',
-          i18nLang: 'ar',
-          isRTL: true,
         },
       ],
     },

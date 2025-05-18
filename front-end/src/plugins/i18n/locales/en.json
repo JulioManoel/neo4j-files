@@ -1,14 +1,18 @@
 {
   "menu": {
-    "users": "Users"
+    "users": "Users",
+    "devices": "Devices"
   },
   "title": {
     "users": "Users",
     "createUser": "Create User",
-    "editUser": "Edit User"
+    "editUser": "Edit User", 
+    "devices": "Devices",
+    "welcome": "Welcome to"
   },
   "search": {
-    "name": "Enter the name"
+    "user": "Search by name, email or id",
+    "device": "Search by id, ip, platform, language or brower"
   },
   "button": {
     "add": "Add",
@@ -16,12 +20,17 @@
     "clear": "Clear",
     "save": "Save",
     "cancel": "Cancel",
-    "delete": "Delete"
+    "delete": "Delete",
+    "login": "Login",
+    "logout": "Logout"
   },
   "headers": {
     "name": "Name",
     "email": "Email",
-    "actions": "Actions"
+    "actions": "Actions",
+    "language": "Language",
+    "platform": "Platform",
+    "brower": "Brower"
   },
   "tooltip": {
     "edit": "Edit",

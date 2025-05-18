@@ -12,7 +12,7 @@
 
       <VCardActions class="pb-6 px-6">
         <VSpacer />
-        <VBtn color="secondary" variant="tonal" @click="$emit('updateModalState', false)">
+        <VBtn color="secondary" variant="tonal" @click="close">
           {{ $t('button.cancel') }}
         </VBtn>
         <VBtn color="error" variant="elevated" @click="confirmDelete" :loading="isLoading">
@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import { useStore } from '@/store/store'
+
 export default {
   props: {
     isDialogVisible: {
@@ -34,9 +36,9 @@ export default {
 
   emits: ['close', 'confirm'],
 
-  data() {
-    return {
-      isLoading: false
+  computed: {
+    isLoading() {
+      return useStore().loading
     }
   },
 

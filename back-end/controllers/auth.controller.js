@@ -1,24 +1,29 @@
-import User from '../model/User.js'
 import AuthService from '../services/auth.service.js'
-import UserService from '../services/user.service.js'
 
 export default class AuthController {
     constructor() {
-        this.userService = new UserService()
         this.authService = new AuthService()
     }
 
-    register = async (req, res) => {
+    login = async (req, res) => {
         try {
-            const user = User.fromJson(req.body.user)
-            const userResponse = await this.service.create(user)
-            return res.status(201).json(userResponse)
+            const { email, password } = req.body.user
+            const auth = await this.authService.login(email, password)
+            return res.status(200).json(auth)
         } catch (error) {
-            
+            console.error('Erro ao fazer login:', error)
+            return res.status(500).json({ error: error.message })
         }
     }
 
-    login = (req, res) => {}
-
-    logout = (req, res) => {}
+    logout = (req, res) => {
+        try {
+            const token = req.headers.authorization?.split(' ')[1]
+            this.authService.logout(token)
+            return res.status(200).json({ message: 'Logout realizado com sucesso!' })
+        } catch (error) {
+            console.error('Erro ao fazer logout:', error)
+            return res.status(500).json({ error: error.message })
+        }
+    }
 }

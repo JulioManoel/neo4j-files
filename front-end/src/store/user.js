@@ -7,10 +7,10 @@ export const useUserStore = defineStore("user", {
         users: null,
     }),
     actions: {
-        async getAll() {
+        async getAll(search) {
             useStore().setLoading(true)
             try {
-                this.users = await UserController.getAll()
+                this.users = await UserController.getAll(search)
             } catch (error) {
                 console.error(error.message)
             } finally {
@@ -22,6 +22,18 @@ export const useUserStore = defineStore("user", {
             useStore().setLoading(true)
             try {
                 await UserController.create(user)
+                await this.getAll()
+            } catch (error) {
+                console.error(error.message)
+            } finally {
+                useStore().setLoading(false)
+            }
+        },
+
+        async update(user) {
+            useStore().setLoading(true)
+            try {
+                await UserController.update(user)
                 await this.getAll()
             } catch (error) {
                 console.error(error.message)

@@ -15,8 +15,13 @@ export default class UserService {
         return User.fromJson(user)
     }
 
-    async findAll() {
-        const usersRaw = await this.repository.findAll()
+    async findByEmail(email) {
+        const user = await this.repository.findByEmail(email)
+        return User.fromJson(user)
+    }
+
+    async findAll(search) {
+        const usersRaw = await this.repository.findAll(search)
         return usersRaw.map(user => User.fromJson(user))
     }
 

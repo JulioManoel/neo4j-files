@@ -1,6 +1,12 @@
 import axios from 'axios';
 
 export default class BaseController {
+    getAuthHeaders() {
+        return {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        };
+      }
+
     async request(method, path, payload = null) {
         const url = `${import.meta.env.VITE_BASE_URL}${path}`
         try {
@@ -8,6 +14,7 @@ export default class BaseController {
               method,
               url,
               data: payload,
+              headers: this.getAuthHeaders(),
             });
             return res.data;
           } catch (err) {

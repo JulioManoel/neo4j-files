@@ -6,6 +6,35 @@ export default class UserRepository extends BaseRepository {
     super('User')
   }
 
+  async findAll(search) {
+    const session = driver.session()
+
+    try {
+      let whereClause = ''
+
+      if (search.search) {
+        whereClause = `
+          WHERE
+            toLower(n.name) CONTAINS toLower($search) OR
+            toLower(n.email) CONTAINS toLower($search) OR
+            toLower(n.id) CONTAINS toLower($search)
+        `
+      }
+
+      const query = `
+          MATCH (n:${this.label})
+          ${whereClause}
+          RETURN n
+      `
+
+      const result = await session.run(query, search)
+      return result.records.map(record => record.get('n').properties)
+    } finally {
+      await session.close()
+    }
+  }
+
+
   async findByEmail(email) {
     const session = driver.session()
 

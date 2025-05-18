@@ -31,7 +31,7 @@ export default class DeviceController {
 
     findAll = async (req, res) => {
         try {
-            const devices = await this.service.findAll()
+            const devices = await this.service.findAll(req.query)
             return res.status(200).json(devices)
         } catch (error) {
             console.error('Erro ao buscar dispositivos:', error)

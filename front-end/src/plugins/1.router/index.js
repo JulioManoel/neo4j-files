@@ -1,5 +1,6 @@
 import { setupLayouts } from 'virtual:generated-layouts'
 import { createRouter, createWebHistory } from 'vue-router/auto'
+import { isUserLoggedIn } from './utils'
 
 function recursiveLayouts(route) {
   if (route.children) {
@@ -23,6 +24,18 @@ const router = createRouter({
   extendRoutes: pages => [
     ...[...pages].map(route => recursiveLayouts(route)),
   ],
+})
+
+router.beforeEach((to, from, next) => {
+  const isLoggedIn = isUserLoggedIn()
+
+  if (isLoggedIn) {
+    if (to.name === 'login') next({ path: '/' })
+    else next()
+  } else {
+    if (to.name === 'login') next()
+    else next({ name: 'login' })
+  } 
 })
 
 export { router }

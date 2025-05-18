@@ -7,18 +7,18 @@
     <VCard>
       <VRow class="mb-2 mx-2 mt-2">
         <VCol cols="12" lg="8" md="8" sm="8">
-          <VTextField :placeholder="$t('search.name')" single-line hide-details dense outlined />
+          <VTextField :placeholder="$t('search.user')" v-model="search" single-line hide-details dense outlined />
         </VCol>
         
         <VCol cols="12" lg="2" md="2" sm="2">
-          <VBtn color="success" block @click="">
+          <VBtn color="success" block @click="getAll">
             {{ $t('button.search') }}
             <VIcon class="ml-2">tabler-search</VIcon>
           </VBtn>
         </VCol>
         
         <VCol cols="12" lg="2" md="2" sm="2">
-          <VBtn color="primary" block @click="openDialogCreate()">
+          <VBtn color="primary" block @click="handleCreate()">
             {{ $t("button.add") }}
             <VIcon class="ml-2">tabler-plus</VIcon>
           </VBtn>
@@ -27,7 +27,7 @@
 
       <VDataTable :items="users" :headers="headers">
         <template #item.actions="{ item }">
-          <VBtn color="transparent" flat @click="">
+          <VBtn color="transparent" flat @click="handleEdit(item)">
             <VIcon size="24">tabler-edit</VIcon>
             <VTooltip activator="parent" location="top">
               {{ $t("tooltip.edit") }}
@@ -44,7 +44,7 @@
       </VDataTable>
     </VCard>
 
-    <UserDialog :isDialogVisible="isDialogUserVisible" @close="closeUserDialog" @create="create" />
+    <UserDialog :isDialogVisible="isDialogUserVisible" :selectedItem="selectedItem" @close="closeUserDialog" @create="create" @update="update" />
     <ConfirmDeleteDialog :isDialogVisible="isDialogDeleteVisible" @close="closeDeleteDialog" @confirm="deleteUser()" />
   </div>
 </template>
@@ -68,9 +68,10 @@ export default {
         { title: this.$t('headers.email'), key: 'email' },
         { title: this.$t('headers.actions'), key: 'actions', align: 'center' },
       ],
+      search: '',
       isDialogUserVisible: false,
       isDialogDeleteVisible: false,
-      selectedItem: null
+      selectedItem: null,
     }
   },
 
@@ -82,15 +83,21 @@ export default {
 
   methods: {
     async getAll() {
-      await useUserStore().getAll()
+      await useUserStore().getAll(this.search)
     },
 
-    openUserDialog() {
-      this.isDialogVisible = true
+    handleCreate() {
+      this.selectedItem = null
+      this.isDialogUserVisible = true
     },
 
     closeUserDialog() {
       this.isDialogUserVisible = false
+    },
+
+    handleEdit(item) {
+      this.selectedItem = item
+      this.isDialogUserVisible = true
     },
 
     handleDelete(item) {
@@ -104,6 +111,12 @@ export default {
 
     async create(user) {
       await useUserStore().create(user)
+      this.closeUserDialog()
+    },
+
+    async update(user) {
+      await useUserStore().update(user)
+      this.closeUserDialog()
     },
 
     async deleteUser(id) {

@@ -4,7 +4,7 @@
 
     <VCard class="pa-sm-10 pa-2">
       <h4 class="text-h4 text-center mb-2">
-        {{ isEditing ? $t('title.editUser') : $t('title.createUser') }}
+        {{ !!selectedItem ? $t('title.editUser') : $t('title.createUser') }}
       </h4>
 
       <VForm ref="refForm" class="mt-4" @submit.prevent="onSubmit">
@@ -20,18 +20,18 @@
           </VCol>
 
           <VCol cols="12" md="6" lg="6" xl="6">
-            <AppTextField v-model="user.password" :label="$t('label.password')" :rules="[requiredValidator]"
+            <AppTextField v-model="user.password" type="password" :label="$t('label.password')" :rules="[requiredValidator]"
               :placeholder="$t('placeholder.password')" />
           </VCol>
 
           <VCol cols="12" md="6" lg="6" xl="6">
-            <AppTextField v-model="user.confirm" :label="$t('label.confirm')" :rules="[requiredValidator]"
+            <AppTextField v-model="user.confirm" type="password" :label="$t('label.confirm')" :rules="[requiredValidator]"
               :placeholder="$t('placeholder.confirm')" />
           </VCol>
         </VRow>
 
         <VCol cols="12" class="mt-5 d-flex flex-wrap justify-center gap-4">
-          <VBtn type="submit">
+          <VBtn type="submit" :loading="isLoading">
             {{ $t('button.save') }}
           </VBtn>
 
@@ -46,6 +46,7 @@
 
 <script>
 import User from '@/models/User'
+import { useStore } from '@/store/store'
 
 export default {
   data() {
@@ -62,6 +63,16 @@ export default {
     isEditing: {
       type: Boolean,
       default: false
+    },
+    selectedItem: {
+      type: Object,
+      default: null
+    }
+  },
+
+  computed: {
+    isLoading() {
+      return useStore().loading
     }
   },
 
@@ -69,20 +80,29 @@ export default {
 
   methods: {
     close() {
-      this.user = new User()
       this.$emit('close')
     },
 
-    onSubmit() {
+    async onSubmit() {
       if (this.user.password !== this.user.confirm) {
         return
       }
 
-      this.$refs.refForm.validate().then(({ valid }) => {
+      await this.$refs.refForm.validate().then(async ({ valid }) => {
         if (!valid) return
-        if (!this.isEditing) return this.$emit('create', this.user)
+        if (!this.selectedItem.id) await this.$emit('create', this.user)
+        else await this.$emit('update', this.user)
       })
+
+      this.user = new User()
+      this.$refs.refForm.reset()
     },
   },
+
+  watch: {
+    selectedItem() {
+      this.user = this.selectedItem || new User()
+    }
+  }
 }
 </script>

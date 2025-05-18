@@ -15,8 +15,8 @@ export default class DeviceService {
         return Device.fromJson(device)
     }
 
-    async findAll() {
-        const devicesRaw = await this.repository.findAll()
+    async findAll(search) {
+        const devicesRaw = await this.repository.findAll(search)
         return devicesRaw.map(device => Device.fromJson(device))
     }
 

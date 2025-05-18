@@ -30,7 +30,7 @@ export default class UserController {
 
     findAll = async (req, res) => {
         try {
-            const users = await this.service.findAll()
+            const users = await this.service.findAll(req.query)
             return res.status(200).json(users)
         } catch (error) {
             console.error('Erro ao buscar usuários:', error)

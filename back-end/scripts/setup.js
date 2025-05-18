@@ -1,4 +1,5 @@
 import { driver } from '../config/neo4j.js'
+import seeders from './seeders/index.js'
 import constraints from './constraints/index.js'
 
 const session = driver.session()
@@ -10,6 +11,12 @@ async function setupConstraints() {
       await session.run(query)
     }
     console.log('✅ Constraints criadas com sucesso!')
+
+    console.log('🌱 Executando seeders...')
+    for (const seeder of seeders) {
+      await seeder(session)
+    }
+    console.log('✅ Seeders executados com sucesso!')
   } catch (error) {
     console.error('❌ Erro ao criar constraints:', error)
   } finally {

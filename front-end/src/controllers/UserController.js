@@ -4,7 +4,11 @@ import BaseController from './BaseController'
 class UserController extends BaseController {
     path = '/users'
 
-    async getAll() {
+    async getAll(search) {
+        if (search) {
+            const users = await super.read(`${this.path}?search=${search}`, true)
+            return users.map(user => User.fromJson(user))
+        }
         const users = await super.read(this.path, true)
         return users.map(user => User.fromJson(user))
     }
@@ -13,27 +17,13 @@ class UserController extends BaseController {
         return await super.create(user.toJson(), this.path)
     }
 
+    async update(user) {
+        return await super.update(user.id, user.toJson(), this.path)
+    }
+
     async delete(id) {
         return await super.delete(id, this.path)
     }
-
-//    async editUser(id, element) {
-//        const user = new User(element)
-//        return await super.update(id, user.toJson(), path)
-//   }
-
-//     async deactivateUser(id) {
-//         return await super.delete(id, path);
-//     }
-
-//     async restore(id) {
-//         const url = `${path}/${id}/restore`;
-//         return await super.create(null, url);
-//     }
-
-//     async passwordUser(userId, editedUser) {
-//         return await super.update(userId, editedUser, path +'/password')
-//   }
 }
 
 export default new UserController()
