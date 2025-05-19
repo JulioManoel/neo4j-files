@@ -2,9 +2,9 @@ import { driver } from '../config/neo4j.js'
 import { modelType } from '../enum/modelType.js'
 import BaseRepository from './base.repository.js'
 
-export default class DeviceRepository extends BaseRepository {
+export default class FolderRepository extends BaseRepository {
     constructor () {
-        super(modelType.DEVICE)
+        super(modelType.FOLDER)
     }
 
     async findAll(search) {
@@ -16,11 +16,8 @@ export default class DeviceRepository extends BaseRepository {
           if (search.search) {
             whereClause = `
               WHERE
-                toLower(n.ip) CONTAINS toLower($search) OR
-                toLower(n.language) CONTAINS toLower($search) OR
                 toLower(n.id) CONTAINS toLower($search) OR
-                toLower(n.platform) CONTAINS toLower($search) OR
-                toLower(n.brower) CONTAINS toLower($search)
+                toLower(n.name) CONTAINS toLower($search)
             `
           }
     

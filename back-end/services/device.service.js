@@ -12,12 +12,10 @@ export default class DeviceService {
 
     async createOrUpdateByIp(device) {
         const devices = await this.findAll({ search: device.ip })
-
         if (devices.length > 0) {
             return await this.update(devices[0].id, {...device, id: devices[0].id})
-        } else {
-            return await this.create(device)
-        }
+        } 
+        else return await this.create(device)
     }
 
     async find(id) {

@@ -11,6 +11,7 @@ export default class Device {
     }
 
     static fromJson(json) {
+        if (json.data) json.date = new Date(json.date)
         return new Device(json)
     }
 
@@ -21,7 +22,7 @@ export default class Device {
             language: this.language,
             platform: this.platform,
             brower: this.brower,
-            date: this.date
+            date: this.date.toISOString()
         }
     }
 }

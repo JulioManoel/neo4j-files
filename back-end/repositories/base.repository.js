@@ -5,7 +5,7 @@ export default class BaseRepository {
     if (!label) throw new Error('Neo4j label must be provided.')
     this.label = label
   }
-
+  
   async create(properties) {
     const session = driver.session()
 

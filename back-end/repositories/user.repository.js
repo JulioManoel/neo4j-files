@@ -5,7 +5,7 @@ import BaseRepository from './base.repository.js'
 
 export default class UserRepository extends BaseRepository {
   constructor() {
-    super('User')
+    super(modelType.USER)
   }
 
   async findAll(search) {
