@@ -33,4 +33,8 @@ export default class UserService {
     async delete(id) {
         return await this.repository.deleteById(id)
     }
+
+    async linkToDevice(userId, deviceId) {
+        await this.repository.linkToDevice(userId, deviceId)
+    }
 }

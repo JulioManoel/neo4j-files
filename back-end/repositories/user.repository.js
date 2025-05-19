@@ -1,4 +1,6 @@
 import { driver } from '../config/neo4j.js'
+import { modelType } from '../enum/modelType.js'
+import { relationshipType } from '../enum/relationshipType.js'
 import BaseRepository from './base.repository.js'
 
 export default class UserRepository extends BaseRepository {
@@ -51,5 +53,9 @@ export default class UserRepository extends BaseRepository {
     } finally {
       await session.close()
     }
+  }
+
+  async linkToDevice(userId, deviceId) {
+    await super.createRelationship(modelType.USER, userId, relationshipType.USES, modelType.DEVICE, deviceId)
   }
 }

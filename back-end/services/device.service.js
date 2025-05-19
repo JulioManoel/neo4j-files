@@ -10,6 +10,16 @@ export default class DeviceService {
         return await this.repository.create(device)
     }
 
+    async createOrUpdateByIp(device) {
+        const devices = await this.findAll({ search: device.ip })
+
+        if (devices.length > 0) {
+            return await this.update(devices[0].id, {...device, id: devices[0].id})
+        } else {
+            return await this.create(device)
+        }
+    }
+
     async find(id) {
         const device = await this.repository.findById(id)
         return Device.fromJson(device)

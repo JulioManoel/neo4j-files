@@ -2,7 +2,7 @@
   <VBadge dot location="bottom right" offset-x="3" offset-y="3" bordered color="success">
     <VAvatar class="cursor-pointer" color="primary" variant="tonal">
       <VAvatar color="primary" variant="tonal">
-        {{ user.name.substring(0, 2) }}
+        {{ user.name.substring(0, 1).toUpperCase() + user.name.substring(1, 2).toLowerCase() }}
       </VAvatar>
 
       <!-- SECTION Menu -->
@@ -14,7 +14,7 @@
               <VListItemAction start>
                 <VBadge dot location="bottom right" offset-x="3" offset-y="3" color="success">
                   <VAvatar color="primary" variant="tonal">
-                    {{ user.name.substring(0, 2) }}
+                    {{ user.name.substring(0, 1).toUpperCase() + user.name.substring(1, 2).toLowerCase() }}
                   </VAvatar>
                 </VBadge>
               </VListItemAction>
@@ -57,7 +57,6 @@ export default {
   methods: {
     async logout() {
       await useAuthStore().logout()
-      console.log('logout')  
       const router = useRouter()
       router.push('/login')
     }

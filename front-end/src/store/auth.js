@@ -25,7 +25,6 @@ export const useAuthStore = defineStore("auth", {
 
         async logout() {
             useStore().setLoading(true)
-            console.log('test')
             try {
                 await AuthController.logout()
                 this.user = null

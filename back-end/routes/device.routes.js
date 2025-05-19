@@ -5,8 +5,8 @@ import { authenticate } from '../middleware/authenticate.js'
 export const router = Router()
 const controller = new DeviceController()
 
-router.post('/devices', controller.create)
-router.get('/devices/:id', controller.find)
+router.post('/devices', authenticate, controller.create)
+router.get('/devices/:id', authenticate, controller.find)
 router.get('/devices', authenticate, controller.findAll)
-router.patch('/devices/:id', controller.update)
-router.delete('/devices/:id', controller.delete)
+router.patch('/devices/:id', authenticate, controller.update)
+router.delete('/devices/:id', authenticate, controller.delete)

@@ -95,4 +95,20 @@ export default class BaseRepository {
       await session.close();
     }
   }
+
+  async createRelationship(nodeAType, nodeAId, relationship, nodeBType, nodeBId) {
+    const session = driver.session()
+
+    try {
+      const query = `
+        MATCH (a:${nodeAType} {id: $nodeAId})
+        MATCH (b:${nodeBType} {id: $nodeBId})
+        MERGE (a)-[r:${relationship}]->(b)
+      `;
+
+      await session.run(query, { nodeAId, nodeBId })
+    } finally {
+      await session.close()
+    }
+  }
 }
