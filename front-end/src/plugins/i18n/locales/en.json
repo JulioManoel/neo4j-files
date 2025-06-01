@@ -1,18 +1,23 @@
 {
   "menu": {
     "users": "Users",
-    "devices": "Devices"
+    "devices": "Devices",
+    "fileExplorer": "File Explorer"
   },
   "title": {
     "users": "Users",
     "createUser": "Create User",
     "editUser": "Edit User", 
     "devices": "Devices",
-    "welcome": "Welcome to"
+    "welcome": "Welcome to",
+    "fileExplorer": "File Explorer",
+    "createFolder": "Create Folder",
+    "uploadFile": "Upload File"
   },
   "search": {
     "user": "Search by name, email or id",
-    "device": "Search by id, ip, platform, language or brower"
+    "device": "Search by id, ip, platform, language or brower",
+    "fileExplorer": "Search by file or folder name"
   },
   "button": {
     "add": "Add",
@@ -22,7 +27,9 @@
     "cancel": "Cancel",
     "delete": "Delete",
     "login": "Login",
-    "logout": "Logout"
+    "logout": "Logout",
+    "createFolder": "Create Folder",
+    "upload": "Upload File"
   },
   "headers": {
     "name": "Name",
@@ -40,7 +47,8 @@
     "name": "Name",
     "email": "Email",
     "password": "Password",
-    "confirm": "Confirm Password"
+    "confirm": "Confirm Password",
+    "fileInput": "Select a file"
   },
   "placeholder": {
     "name": "Enter the name",

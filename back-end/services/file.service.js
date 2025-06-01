@@ -6,8 +6,8 @@ export default class FileService {
         this.repository = new FileRepository()
     }
 
-    async create(folder) {
-        return await this.repository.create(folder)
+    async create(folder, userId, deviceId, folderId = null) {
+        return await this.repository.create(folder, userId, deviceId, folderId)
     }
 
     async find(id) {
@@ -20,12 +20,7 @@ export default class FileService {
         return folderRaw.map(folder => File.fromJson(folder))
     }
 
-    // async update(id, updates) {
-    //     const device = await this.repository.updateById(id, updates)
-    //     return Folder.fromJson(device)
-    // }
-
-    // async delete(id) {
-    //     return await this.repository.deleteById(id)
-    // }
+    async registerDownload(fileId, userId, device) {
+        return await this.repository.registerDownload(fileId, userId, device)
+    }
 }

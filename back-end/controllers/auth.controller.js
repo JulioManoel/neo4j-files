@@ -17,7 +17,6 @@ export default class AuthController {
             
             const auth = await this.authService.login(email, password)
             const device = await this.deviceService.createOrUpdateByIp(deviceRaw.toJson())
-
             await this.userService.linkToDevice(auth.user.id, device.id)
             return res.status(200).json(auth)
         } catch (error) {

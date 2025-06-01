@@ -7,11 +7,10 @@ export default class Device {
         this.language = language || ''
         this.platform = platform || ''
         this.brower = brower || ''
-        this.date = date || new Date()
+        this.date = date ? new Date(date) : new Date()
     }
 
     static fromJson(json) {
-        if (json.data) json.date = new Date(json.date)
         return new Device(json)
     }
 

@@ -43,7 +43,7 @@ export default {
         { title: this.$t('headers.language'), key: 'language' },
         { title: this.$t('headers.platform'), key: 'platform' },
         { title: this.$t('headers.brower'), key: 'brower' },
-        { title: this.$t('headers.actions'), key: 'actions', align: 'center' },
+        // { title: this.$t('headers.actions'), key: 'actions', align: 'center' },
       ],
       search: '',
     }

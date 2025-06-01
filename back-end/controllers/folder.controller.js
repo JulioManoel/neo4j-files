@@ -1,15 +1,18 @@
 import Folder from '../model/Folder.js'
 import FolderService from '../services/folder.service.js'
+import UserService from '../services/user.service.js'
 
 export default class FolderController {
     constructor() {
         this.service = new FolderService()
+        this.userService = new UserService()
     }
 
     create = async (req, res) => {
         try {
             const folderRaw = Folder.fromJson(req.body)
-            const folder = await this.service.create(folderRaw.toJson())
+            const devices = await this.userService.getConnectedDevice(req.userId)
+            const folder = await this.service.create(folderRaw.toJson(), req.userId, devices[0].id)
             return res.status(201).json(folder)
         } catch (error) {
             console.error('Error in creating folder:', error)

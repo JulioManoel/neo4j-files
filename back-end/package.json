@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "serve": "nodemon app.js",
-    "setup": "node scripts/setup.js"
+    "setup": "node scripts/setup.js",
+    "start": "node app.js"
   },
   "author": "Julio Cesar Bonow Manoel",
   "license": "ISC",

@@ -6,8 +6,8 @@ export default class FolderService {
         this.repository = new FolderRepository()
     }
 
-    async create(folder) {
-        return await this.repository.create(folder)
+    async create(folder, userId, deviceId) {
+        return await this.repository.create(folder, userId, deviceId)
     }
 
     async find(id) {
@@ -19,13 +19,4 @@ export default class FolderService {
         const folderRaw = await this.repository.findAll(search)
         return folderRaw.map(folder => Folder.fromJson(folder))
     }
-
-    // async update(id, updates) {
-    //     const device = await this.repository.updateById(id, updates)
-    //     return Folder.fromJson(device)
-    // }
-
-    // async delete(id) {
-    //     return await this.repository.deleteById(id)
-    // }
 }

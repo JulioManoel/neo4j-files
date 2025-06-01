@@ -2,9 +2,9 @@ import { getI18n } from '@/plugins/i18n'
 
 export default [
   {
-    title: 'Home',
+    title: getI18n().global.t('menu.fileExplorer'),
     to: { name: 'root' },
-    icon: { icon: 'tabler-smart-home' },
+    icon: { icon: 'tabler-file' },
   },
   {
     title: getI18n().global.t('menu.users'),

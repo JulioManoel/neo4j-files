@@ -23,7 +23,6 @@
             <VListItemTitle class="font-weight-semibold">
               {{ user.name }}
             </VListItemTitle>
-            <VListItemSubtitle>Admin</VListItemSubtitle>
           </VListItem>
 
           <VDivider class="my-2" />

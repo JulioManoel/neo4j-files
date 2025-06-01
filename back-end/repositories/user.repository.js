@@ -56,6 +56,22 @@ export default class UserRepository extends BaseRepository {
   }
 
   async linkToDevice(userId, deviceId) {
-    await super.createRelationship(modelType.USER, userId, relationshipType.USES, modelType.DEVICE, deviceId)
+    await super.createRelationship(modelType.USER, userId, relationshipType.CONNECTED_TO, modelType.DEVICE, deviceId)
+  }
+
+  async getConnectedDevice(userId) {
+    const session = driver.session()
+    
+    try {
+      const query = `
+        MATCH (u:User {id: $userId})-[:CONNECTED_TO]->(d:Device)
+        RETURN d
+      `
+
+      const result = await session.run(query, { userId })
+      return result.records.map(record => record.get('d').properties)
+    } finally {
+      await session.close()
+    }
   }
 }

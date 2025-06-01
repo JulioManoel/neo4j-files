@@ -1,16 +1,21 @@
 import File from '../model/File.js'
 import FileService from '../services/file.service.js'
+import UserService from '../services/user.service.js'
 
 export default class FileController {
     constructor() {
         this.service = new FileService()
+        this.userService = new UserService()
     }
 
     create = async (req, res) => {
         try {
+            const folderId = req.body.folderId
             const {originalname, mimetype, path} = req.file
-            const fileRaw = File.fromJson({originalname, mimetype, path})
-            const file = await this.service.create(fileRaw.toJson())
+            const fileRaw = File.fromJson({name: originalname, extension: mimetype, path})
+
+            const devices = await this.userService.getConnectedDevice(req.userId)
+            const file = await this.service.create(fileRaw.toJson(), req.userId, devices[0].id, folderId)
             return res.status(201).json(file)
         } catch (error) {
             console.error('Error in creating file:', error)
@@ -39,26 +44,21 @@ export default class FileController {
         }
     }
 
-    // update = async (req, res) => {
-    //     try {
-    //         const { id } = req.params
-    //         const deviceRaw = Device.fromJson({...req.body, id})
-    //         const device = await this.service.update(id, deviceRaw)
-    //         return res.status(200).json(device)
-    //     } catch (error) {
-    //         console.error('Erro ao atualizar dispositivo:', error)
-    //         return res.status(500).json({ error: error.message })
-    //     }
-    // }
+    download = async (req, res) => {
+        try {
+            const { fileId } = req.params
+            const file = await this.service.find(fileId)
+            if (!file) return res.status(404).json({ error: 'File not found' })
 
-    // delete = async (req, res) => {
-    //     try {
-    //         const { id } = req.params
-    //         const device = await this.service.delete(id)
-    //         return res.status(200).json(device)
-    //     } catch (error) {
-    //         console.error('Erro ao deletar dispositivo:', error)
-    //         return res.status(500).json({ error: error.message })
-    //     }
-    // }
+            const devices = await this.userService.getConnectedDevice(req.userId)
+            await this.service.registerDownload(fileId, req.userId, devices[0].id)
+
+            res.download(file.path, file.name)
+        } catch (error) {
+            console.error('Error in downloading file:', error)
+            return res.status(500).json({ error: error.message })
+        }
+    }
+
+    
 }

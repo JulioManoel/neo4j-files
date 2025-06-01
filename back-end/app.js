@@ -1,7 +1,6 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
-import { resolve } from 'path'
 import { router as authRouter } from './routes/auth.routes.js'
 import { router as userRouter } from './routes/user.routes.js'
 import { router as fileRouter } from './routes/file.routes.js'
@@ -23,7 +22,6 @@ app.use('/api', neo4jRouter)
 app.use('/api', deviceRouter)
 app.use('/api', folderRouter)
 app.use('/api', fileSystemRouter)
-app.use('/files', express.static(resolve('uploads')))
 
 const PORT = process.env.PORT
 app.listen(PORT, () => {

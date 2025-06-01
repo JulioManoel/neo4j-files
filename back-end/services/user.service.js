@@ -37,4 +37,8 @@ export default class UserService {
     async linkToDevice(userId, deviceId) {
         await this.repository.linkToDevice(userId, deviceId)
     }
+
+    async getConnectedDevice(userId) {
+        return await this.repository.getConnectedDevice(userId)
+    }
 }

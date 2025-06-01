@@ -103,7 +103,7 @@ export default class BaseRepository {
       const query = `
         MATCH (a:${nodeAType} {id: $nodeAId})
         MATCH (b:${nodeBType} {id: $nodeBId})
-        MERGE (a)-[r:${relationship}]->(b)
+        MERGE (a)-[r:${relationship} {date: datetime()}]->(b)
       `;
 
       await session.run(query, { nodeAId, nodeBId })

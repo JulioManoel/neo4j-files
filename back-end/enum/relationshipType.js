@@ -1,3 +1,6 @@
 export const relationshipType = {
-    USES: 'USES',
+    CONNECTED_TO: 'CONNECTED_TO',
+    DISCONNECTED_FROM: 'DISCONNECTED_FROM',
+    CREATED: 'CREATED',
+    USED_IN_CREATION: 'USED_IN_CREATION',
 }
