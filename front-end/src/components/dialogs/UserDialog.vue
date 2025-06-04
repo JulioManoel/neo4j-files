@@ -90,7 +90,7 @@ export default {
 
       await this.$refs.refForm.validate().then(async ({ valid }) => {
         if (!valid) return
-        if (!this.selectedItem.id) await this.$emit('create', this.user)
+        if (!this.selectedItem) await this.$emit('create', this.user)
         else await this.$emit('update', this.user)
       })
 
